@@ -1,12 +1,13 @@
 <template>
   <div id="app">
+      <h2>Clientes</h2>
       <k-data-table :headers="headers" :data="[{ id: 'asdasd', name: 'kevin', email: 'kevingood' }]">
           <template #name="{ row, header }">
               <h3>{{row.name}} - {{header.text}}</h3>
           </template>
       </k-data-table>
       <k-button @click="show = !show" variant="primary">Abrir</k-button>
-      <k-modal v-model="show" width="380px" title="Customer">
+      <k-modal v-model="show" width="400px" title="Customer">
           <k-form>
               <k-row>
                   <k-column cols="12">
@@ -100,5 +101,11 @@ body, input, textarea {
 html, body {
     width: 100%;
     height: 100%;
+}
+
+#app {
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 </style>

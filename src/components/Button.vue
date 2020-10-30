@@ -1,6 +1,9 @@
 <template>
     <button :class="classes" @click="$emit('click')">
-        <slot></slot>
+        <fa-icon v-if="icon" :size="iconSize" :color="iconColor" :icon="icon"></fa-icon>
+        <slot v-else>
+
+        </slot>
     </button>
 </template>
 
@@ -20,15 +23,27 @@ export default class Button extends Vue {
     variant!: Variant
 
     @Prop({
-        default: false,
-        type: Boolean
+        default: '',
+        type: String
     })
-    icon!: boolean
+    icon!: string
+
+    @Prop({
+        default: 'lg',
+        type: String
+    })
+    iconSize!: string
+
+    @Prop({
+        default: '#fff',
+        type: String
+    })
+    iconColor!: string
 
     get classes() {
         const _: any = {
             'btn': true,
-            icon: this.icon,
+            icon: !!this.icon,
         }
         if(this.variant) _[this.variant] = true
         return _

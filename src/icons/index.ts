@@ -4,9 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faBars,
   faHome,
-  faTimes
+  faTimes,
+  faAngleLeft,
+  faAngleDoubleLeft,
+  faAngleRight,
+  faAngleDoubleRight
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faBars, faHome, faTimes)
+library.add(
+  faBars, 
+  faHome, 
+  faTimes,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleLeft,
+  faAngleDoubleRight
+)
 
 Vue.component('fa-icon', FontAwesomeIcon)

@@ -4,9 +4,7 @@
             <div :style="{ width }" class="modal">
                 <div class="modal-header">
                     {{title}}
-                    <k-button icon @click="show = false">
-                        <fa-icon icon="times" size="lg" color="#fff"/>
-                    </k-button>
+                    <k-button @click="show = false" icon="times"/>
                 </div>
                 <div class="modal-body">
                     <slot></slot>
