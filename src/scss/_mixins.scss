@@ -1,0 +1,11 @@
+@mixin variant-classes {
+    @each $name, $color in $variants {
+        &.#{$name} {
+            background-color: $color;
+            color: $text-color;
+            &:hover {
+                background-color: darken($color, 10)
+            }
+        }
+    }
+}

@@ -1,32 +1,104 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+      <k-data-table :headers="headers" :data="[{ id: 'asdasd', name: 'kevin', email: 'kevingood' }]">
+          <template #name="{ row, header }">
+              <h3>{{row.name}} - {{header.text}}</h3>
+          </template>
+      </k-data-table>
+      <k-button @click="show = !show" variant="primary">Abrir</k-button>
+      <k-modal v-model="show" width="380px" title="Customer">
+          <k-form>
+              <k-row>
+                  <k-column cols="12">
+                      <k-text-field label="Nome" name="customer.name"/>
+                  </k-column>
+                  <k-column cols="12">
+                      <k-text-field label="Idade" name="customer.email"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field label="Telefone" name="customer.tel"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field label="Celular" name="customer.cel"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field v-mask="'###.###.###-##'" label="CPF" name="customer.cpf"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field label="Tel. Comercial" name="customer.telcom"/>
+                  </k-column>
+                  <k-column cols="3">
+                      <k-text-field label="CEP" name="customer.address.zipcode"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field label="Logradouro" name="customer.address.street"/>
+                  </k-column>
+                  <k-column cols="3">
+                      <k-text-field label="Número" name="customer.addressNumber"/>
+                  </k-column>
+                  <k-column cols="6">
+                      <k-text-field label="Bairro" name="customer.address.neighborhood"/>
+                  </k-column>
+                  <k-column cols="4">
+                      <k-text-field label="Cidade" name="customer.address.city"/>
+                  </k-column>
+                  <k-column cols="2">
+                      <k-text-field label="UF" name="customer.address.district"/>
+                  </k-column>
+                  <k-column cols="12">
+                      <k-text-field label="Complemento" name="customer.complement"/>
+                  </k-column>
+                  <k-column cols="12">
+                      <k-text-field label="Observação" type="textarea" name="customer.observations"/>
+                  </k-column>
+              </k-row>
+              <k-button variant="success">
+                  Submitar
+              </k-button>
+          </k-form>
+      </k-modal>
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue'
+import { IHeader } from './types'
+export default Vue.extend({
+    data: () => ({
+        show: false,
+        headers: [
+            {
+                property: 'id',
+                text: '#',
+            },
+            {
+                property: 'name',
+                text: 'Name',
+            },
+            {
+                property: 'email',
+                text: 'Email',
+            },
+        ] as IHeader[]
+    })
+})
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+body, input, textarea {
+    font-family: "Roboto", "Arial", sans-serif;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+html, body {
+    width: 100%;
+    height: 100%;
 }
 </style>
