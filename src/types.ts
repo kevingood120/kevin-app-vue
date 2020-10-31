@@ -13,3 +13,10 @@ export interface IPageSettings {
     total: number
     pages: number
 }
+
+export interface ISidebarLink {
+    title: string
+    href: string
+    icon: string | string[]
+    items?: ISidebarLink[]
+}

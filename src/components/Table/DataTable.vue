@@ -20,13 +20,13 @@
                 </tbody>
             </table>
         </div>
-        <pagination v-model="pageSettings"></pagination>
+        <pagination v-model="pagination"></pagination>
     </div>
 </template>
 
 <script lang="ts">
 import { IHeader, IPageSettings } from '@/types'
-import { Component, Model, Prop, Vue } from 'vue-property-decorator'
+import { Component, Model, Prop, Vue, Watch } from 'vue-property-decorator'
 import Pagination from './Pagination.vue'
  
 @Component({
@@ -45,21 +45,22 @@ export default class DataTable extends Vue {
     })
     data!: any[]
 
-    @Model('update:page-settings')
-    _pageSettings!: IPageSettings
+    pagination: any = {}
 
-    get pageSettings() {
-        return this._pageSettings
-    }
-
-    set pageSettings(value: IPageSettings) {
-        this.$emit('update:page-settings', value)
+    @Watch('pagination', {
+        deep: true,
+        immediate: true
+    })
+    paginationWatch(value: any) {
+        console.log(value)
     }
 }
 </script>
 
 <style lang="scss" scoped>
     .container-table {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        margin: 10px 0px;
         .responsive {
             .table {
                 width: 100%;
@@ -68,14 +69,23 @@ export default class DataTable extends Vue {
                     border-collapse: collapse;
                 }
 
+                th {
+                    color: rgba(0,0,0,.6);
+                }
+
                 td,th {
-                    padding: 8px 2px;
+                    padding: 12px 10px;
                     text-align: left;
                 }
 
-                th {
-                    background-color: $primary;
-                    color: #fff;
+                tr {
+                    border-bottom: 1px solid rgba(156, 111, 111, 0.2);
+                }
+
+                tbody {
+                    tr:hover {
+                        background-color: rgba(0,0,0,.03);
+                    }
                 }
             }
         }

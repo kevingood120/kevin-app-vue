@@ -1,12 +1,12 @@
 <template>
     <div class="pagination-table">
-        <k-button icon="angle-double-left" iconColor="#000"/>
-        <k-button icon="angle-left" iconColor="#000"/>
+        <k-button :disabled="(pageSettings.page <= 1)" icon="angle-double-left" @click="paginationClick(pageSettings.page = 1)" iconColor="#000"/>
+        <k-button :disabled="(pageSettings.page <= 1)" icon="angle-left" @click="paginationClick(pageSettings.page -= 1)" iconColor="#000"/>
         <span>
-            {{pageSettings.page}} - {{pageSettings.total}}
+            {{pageSettings.page}} - {{pageSettings.pages}}
         </span>
-        <k-button icon="angle-right" iconColor="#000"/>
-        <k-button icon="angle-double-right" iconColor="#000"/>
+        <k-button icon="angle-right" :disabled="(pageSettings.page === pageSettings.pages)" @click="paginationClick(pageSettings.page += 1)" iconColor="#000"/>
+        <k-button icon="angle-double-right" :disabled="(pageSettings.page === pageSettings.pages)" @click="paginationClick(pageSettings.page = pageSettings.pages)" iconColor="#000"/>
     </div>
 </template>
 
@@ -17,23 +17,25 @@ import { Component, Model, Prop, Vue } from 'vue-property-decorator'
 @Component({
 
 })
-export default class Row extends Vue {
-    @Model('update:pageSettings', {
-        default: {
+export default class Pagination extends Vue {
+
+    @Prop({
+        default: () => ({
             page: 1,
             limit: 5,
-            pages: 5,
-            total: 10
-        } as IPageSettings
+            total: 30,
+            get pages() {
+                return Math.ceil(this.total / this.limit)
+            }
+        } as IPageSettings)
     })
-    _pageSettings!: IPageSettings
+    pageSettings!: IPageSettings
 
-    get pageSettings() {
-        return this._pageSettings
-    }
-
-    set pageSettings(value: IPageSettings) {
-        this.$emit('update:page-settings', value)
+    paginationClick(newPage: number) {
+        this.$emit('input', {
+            ...this.pageSettings,
+            page: newPage
+        })
     }
 }
 </script>
@@ -42,10 +44,13 @@ export default class Row extends Vue {
     .pagination-table {
         display: flex;
         align-items: center;
-        justify-content: center;
+        padding: 5px 20px;
+        justify-content: flex-end;
 
         & > * {
             margin: 0 5px;
         }
+
+        margin: 5px 0px;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <button :class="classes" @click="$emit('click')">
-        <fa-icon v-if="icon" :size="iconSize" :color="iconColor" :icon="icon"></fa-icon>
+    <button :class="classes" v-on="$listeners" v-bind="$attrs">
+        <fa-icon v-if="icon" :style="{ fontSize: iconSize, color: iconColor }" :icon="icon"></fa-icon>
         <slot v-else>
 
         </slot>
@@ -44,6 +44,7 @@ export default class Button extends Vue {
         const _: any = {
             'btn': true,
             icon: !!this.icon,
+            ['px-0']: true
         }
         if(this.variant) _[this.variant] = true
         return _
@@ -60,19 +61,26 @@ export default class Button extends Vue {
         align-items: center;
         transition: all .1s;
         justify-content: center;
+        cursor: pointer;
+
+        &:disabled {
+            pointer-events: none;
+            opacity: .65;
+        }
 
         &.icon {
             width: 35px;
             height: 35px;
             background-color: transparent;
             border-radius: 50%;
+            padding: 20px;
             
             &:hover {
-                background-color: rgba(0,0,0,.2);
+                background-color: rgba(0,0,0,.05);
             }
 
             &:active {
-                background-color: rgba(0,0,0,.5);
+                background-color: rgba(0,0,0,.1);
             }
         }
 
